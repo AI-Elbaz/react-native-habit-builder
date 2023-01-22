@@ -1,9 +1,7 @@
-import {useContext, useEffect, useRef, useState} from 'react';
-import {UserDataContext} from '../contexts/userDataContext';
+import {useEffect, useRef, useState} from 'react';
 import dayjs from 'dayjs';
 
-const useCounter = () => {
-  const {startTime} = useContext(UserDataContext);
+const useCounter = startTime => {
   const [counter, setCounter] = useState(getDuration());
   const interval = useRef(null);
 
@@ -12,9 +10,11 @@ const useCounter = () => {
     const duration = dayjs.duration(diff);
     return {
       days: duration.days(),
-      hours: duration.hours().toString().padStart(2, 0),
-      minutes: duration.minutes().toString().padStart(2, 0),
-      seconds: duration.seconds().toString().padStart(2, 0),
+      details: {
+        hours: duration.hours().toString().padStart(2, 0),
+        minutes: duration.minutes().toString().padStart(2, 0),
+        seconds: duration.seconds().toString().padStart(2, 0),
+      },
     };
   }
 
